@@ -2,70 +2,72 @@ const Axios = require('axios');
 const fxp = require('fast-xml-parser');
 
 const RadikoApi = () => {
-  function getXml(path) {
+  async function getXml(url) {
     const axios = Axios.create({
-      baseURL: 'http://radiko.jp/v3',
       headers: {
         'ContentType': 'application/xml',
         'X-Requested-With': 'XMLHttpRequest'
       },
       responseType: 'xml'
     });
-    return new Promise((resolve, reject) => {
-      axios.get(path)
-        .then((res) => {
-          const options = {
-            attributeNamePrefix : "",
-            attrNodeName: "attr", //default is 'false'
-            ignoreAttributes: false
-          };
-          resolve(fxp.parse(res.data, options));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+
+    const response = await axios.get(url)
+    return response.data;
+  }
+
+  async function getJson(path) {
+    const xml = await getXml('http://radiko.jp/v3' + path);
+    return fxp.parse(xml, {
+      attributeNamePrefix : "",
+      attrNodeName: "attr", //default is 'false'
+      ignoreAttributes: false
     });
   }
 
-  function progs(areaId) {
-
-    function today() {
-      return getXml(`/program/today/${areaId}.xml`)
-    }
-
-    function now() {
-      return getXml(`/program/now/${areaId}.xml`)
-    }
-
-    function weekly(stationId) {
-      return getXml(`/program/station/weekly/${stationId}.xml`)
-    }
-
-    function date(date, stationId) {
-      let filename = `${areaId}.xml`;
-      let path = `date/${type}`;
-      if (stationId !== null && stationId !== undefined) {
-        filename = `${stationId}.xml`;
-        path = `/station/${path}`;
-      }
-      return getXml(`/program/${path}/${filename}`);
-    }
-
-    return {
-      today,
-      now,
-      weekly,
-      date
-    }
+  async function getAreaID() {
+    const raw = await getXml('http://radiko.jp/area');
+    return raw.match(/JP\d{2}/)[0];
   }
 
-  function stations(areaId) {
-    return getXml(`/station/list/${areaId}.xml`);
+  const progs = {
+    today: async (stationId) => {
+      let filename, path;
+      if (stationId === undefined) {
+        const areaId = await getAreaID();
+        return await getJson(`/program/today/${areaId}.xml`);
+      }
+      return await getJson(`/program/station/today/${statinId}.xml`);
+    },
+
+    now: async () => {
+      const areaId = await getAreaID();
+      return await getJson(`/program/now/${areaId}.xml`)
+    },
+
+    weekly: async (stationId) => {
+      const areaId = await getAreaID();
+      return await getJson(`/program/station/weekly/${stationId}.xml`)
+    },
+
+    date: async (date, stationId) => {
+      let filename, path;
+      if (stationId === undefined) {
+        const areaId = await getAreaID();
+        return await getJson(`/program/date/${date}/${areaId}.xml`);
+      }
+      return await getJson(`/program/station/date/${date}/${stationId}.xml`);
+    },
+  }
+
+  async function stations(areaId) {
+    if (areaId === undefined) areaId = await getAreaID();
+    return await getJson(`/station/list/${areaId}.xml`);
   }
 
   return {
     progs,
     stations,
+    getAreaID
   }
 }
 
