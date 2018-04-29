@@ -1,4 +1,4 @@
-const radikoApi = require('../index');
+const radikoApi = require('../radiko-api');
 const assert = require('assert');
 
 function isFunc(target) {
