@@ -1,7 +1,7 @@
 const Axios = require('axios');
 const fxp = require('fast-xml-parser');
 
-const RadikoApi = () => {
+const RadikoApi = (() => {
   async function getXml(url) {
     const axios = Axios.create({
       headers: {
@@ -69,6 +69,6 @@ const RadikoApi = () => {
     stations,
     getAreaId
   }
-}
+})();
 
 module.exports = RadikoApi;

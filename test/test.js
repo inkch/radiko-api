@@ -1,25 +1,25 @@
-const RadikoApi = require('../index');
+const radikoApi = require('../index');
 const assert = require('assert');
 
 function isFunc(target) {
   return "function" === typeof target;
 }
 
-describe('RadikoApi Client', function() {
+describe('radikoApi Client', function() {
 
   describe('basis', function() {
     it('module exists', function() {
-      assert(null !== RadikoApi)
-      assert(undefined !== RadikoApi)
+      assert(null !== radikoApi)
+      assert(undefined !== radikoApi)
     });
   });
 
   describe('Get area id', function() {
     it('function exists', () => {
-      assert(isFunc(RadikoApi().getAreaId))
+      assert(isFunc(radikoApi.getAreaId))
     })
     it('Area ID is JP13', function() {
-      return RadikoApi().getAreaId().then( areaId => {
+      return radikoApi.getAreaId().then( areaId => {
         assert("JP13" === areaId)
       });
     })
@@ -27,13 +27,13 @@ describe('RadikoApi Client', function() {
 
   describe('Get stations list', function() {
     it('function exists', function() {
-      assert(isFunc(RadikoApi().stations))
+      assert(isFunc(radikoApi.stations))
     });
 
     describe('response', function() {
       let response;
       it('response exists', function() {
-        return RadikoApi().stations().then( res => {
+        return radikoApi.stations().then( res => {
           response = res;
           assert(res);
         });
@@ -64,19 +64,19 @@ describe('RadikoApi Client', function() {
 
   describe('Get program info', () => {
     describe('#today', () => {
-      it('function exists', () => assert(isFunc(RadikoApi().progs.today)))
+      it('function exists', () => assert(isFunc(radikoApi.progs.today)))
       describe('response', () => {
         it('All stations', () => {
-          return RadikoApi().progs.today().then( res => assert(res) );
+          return radikoApi.progs.today().then( res => assert(res) );
         });
         it('Specific station (TBS)', () => {
           const stationId = "TBS";
-          return RadikoApi().progs.today(stationId).then( res => assert(res) );
+          return radikoApi.progs.today(stationId).then( res => assert(res) );
         });
       });
     });
     describe('#date', () => {
-      it('function exists', () => assert(isFunc(RadikoApi().progs.date)))
+      it('function exists', () => assert(isFunc(radikoApi.progs.date)))
 
       describe('response', () => {
         const today = (() => { // yyyymmdd as string
@@ -87,25 +87,25 @@ describe('RadikoApi Client', function() {
         })();
 
         it('All stations', () => {
-          return RadikoApi().progs.date(today).then( res => assert(res) );
+          return radikoApi.progs.date(today).then( res => assert(res) );
         });
         it('Specific station (TBS)', () => {
           const stationId = "TBS";
-          return RadikoApi().progs.date(today, stationId).then( res => assert(res) );
+          return radikoApi.progs.date(today, stationId).then( res => assert(res) );
         });
       });
     });
     describe('#now', () => {
-      it('function exists', () => assert(isFunc(RadikoApi().progs.now)))
+      it('function exists', () => assert(isFunc(radikoApi.progs.now)))
       it('response exists', () => {
-        return RadikoApi().progs.now().then( res => assert(res) );
+        return radikoApi.progs.now().then( res => assert(res) );
       });
     });
     describe('#weekly', () => {
-      it('function exists', () => assert(isFunc(RadikoApi().progs.weekly)))
+      it('function exists', () => assert(isFunc(radikoApi.progs.weekly)))
       it('response exists (TBS)', () => {
         const stationId = "TBS";
-        return RadikoApi().progs.weekly(stationId).then( res => assert(res) );
+        return radikoApi.progs.weekly(stationId).then( res => assert(res) );
       });
     });
   });
