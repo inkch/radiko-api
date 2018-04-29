@@ -1,6 +1,6 @@
 {
   "name": "radiko-api",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "API wrapper for Radiko (Japanese commercial broadcasting radio)",
   "main": "radiko-api.js",
   "scripts": {
