@@ -24,7 +24,7 @@ const RadikoApi = () => {
     });
   }
 
-  async function getAreaID() {
+  async function getAreaId() {
     const raw = await getXml('http://radiko.jp/area');
     return raw.match(/JP\d{2}/)[0];
   }
@@ -33,26 +33,26 @@ const RadikoApi = () => {
     today: async (stationId) => {
       let filename, path;
       if (stationId === undefined) {
-        const areaId = await getAreaID();
+        const areaId = await getAreaId();
         return await getJson(`/program/today/${areaId}.xml`);
       }
       return await getJson(`/program/station/today/${statinId}.xml`);
     },
 
     now: async () => {
-      const areaId = await getAreaID();
+      const areaId = await getAreaId();
       return await getJson(`/program/now/${areaId}.xml`)
     },
 
     weekly: async (stationId) => {
-      const areaId = await getAreaID();
+      const areaId = await getAreaId();
       return await getJson(`/program/station/weekly/${stationId}.xml`)
     },
 
     date: async (date, stationId) => {
       let filename, path;
       if (stationId === undefined) {
-        const areaId = await getAreaID();
+        const areaId = await getAreaId();
         return await getJson(`/program/date/${date}/${areaId}.xml`);
       }
       return await getJson(`/program/station/date/${date}/${stationId}.xml`);
@@ -60,14 +60,14 @@ const RadikoApi = () => {
   }
 
   async function stations(areaId) {
-    if (areaId === undefined) areaId = await getAreaID();
+    if (areaId === undefined) areaId = await getAreaId();
     return await getJson(`/station/list/${areaId}.xml`);
   }
 
   return {
     progs,
     stations,
-    getAreaID
+    getAreaId
   }
 }
 
