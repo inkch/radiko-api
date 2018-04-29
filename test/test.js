@@ -5,12 +5,12 @@ function isFunc(target) {
   return "function" === typeof target;
 }
 
-describe('RadikoApi test', function() {
+describe('RadikoApi Client', function() {
 
   describe('basis', function() {
     it('module exists', function() {
-      assert(null !== RadikoApi())
-      assert(undefined !== RadikoApi())
+      assert(null !== RadikoApi)
+      assert(undefined !== RadikoApi)
     });
   });
 
