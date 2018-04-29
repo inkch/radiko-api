@@ -36,7 +36,7 @@ const RadikoApi = () => {
         const areaId = await getAreaId();
         return await getJson(`/program/today/${areaId}.xml`);
       }
-      return await getJson(`/program/station/today/${statinId}.xml`);
+      return await getJson(`/program/station/today/${stationId}.xml`);
     },
 
     now: async () => {
