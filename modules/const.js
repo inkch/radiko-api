@@ -1,7 +1,6 @@
 const Const = {
   dir: {
-    tmp: 'tmp',
-    output: 'output',
+    auth: 'auth',
   },
   url: {
     player: 'http://radiko.jp/apps/js/flash/myplayer-release.swf',

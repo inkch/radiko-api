@@ -11,7 +11,7 @@ const createDirIfNeeded = (dirname) => {
 
 const createPlayerFile = async () => {
   const date = moment().format('YYYYMMDD-HH');
-  const path = `${Const.dir.tmp}/player.${date}.swf`;
+  const path = `${Const.dir.auth}/player.${date}.swf`;
 
   if (fs.existsSync(path)) return path;
 
@@ -19,18 +19,18 @@ const createPlayerFile = async () => {
     responseType: 'arraybuffer',
   });
 
-  createDirIfNeeded(Const.dir.tmp);
+  createDirIfNeeded(Const.dir.auth);
   fs.writeFileSync(path, res.data);
   return path;
 };
 
 const createKeyFile = async (playerFile) => {
   const date = moment().format('YYYYMMDD-HH');
-  const path = `${Const.dir.tmp}/authkey.${date}.jpg`;
+  const path = `${Const.dir.auth}/authkey.${date}.jpg`;
 
   if (fs.existsSync(path)) return path;
 
-  createDirIfNeeded(Const.dir.tmp);
+  createDirIfNeeded(Const.dir.auth);
 
   await exec(`swfextract -b 12 ${playerFile} -o ${path}`, true);
   return path;
