@@ -97,7 +97,6 @@ const auth = async () => {
   const partialKey = await getPartialKey(key, token, keyOffset, keyLength);
   await auth2(token, partialKey);
   return {
-    success: true,
     token,
     partialKey,
     key,

@@ -17,7 +17,6 @@ describe('Authentication', function() {
       radikoApi.auth().then( response => {
         res = response;
         assert(res);
-        assert(res.success === true);
         assert(res.token)
         assert(res.partialKey)
         assert(res.key)
