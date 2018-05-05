@@ -20,6 +20,23 @@ npm install radiko-api
 const radikoApi = require('radiko-api');
 ```
 
+### Authentication
+Create './auth' directory & below files.
+
+  1. 'authkey.YYYYMMDD-HH.jpg'
+  2. 'player.YYYYMMDD-HH.swf'
+
+Returns:
+
+  - `token`: token returns auth1
+  - `partialKey` base64 partial key
+  - `key`: path to key file
+  - `playerFile`: path to player file
+
+```
+radikoApi.auth()
+  .then( res => console.log(res) )
+```
 
 ### Get area ID
 ```
