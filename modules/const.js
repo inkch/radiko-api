@@ -1,6 +1,6 @@
 const Const = {
   dir: {
-    auth: 'auth',
+    auth: `${__dirname}/../tmp/auth`,
   },
   url: {
     player: 'http://radiko.jp/apps/js/flash/myplayer-release.swf',
